@@ -23,7 +23,9 @@ class Main extends Sprite
 	var maxZoom:Float;
 	var minZoom:Float;
 	var zoom:Float;
+	var preZoom:Float;
 	var bgPos:Point;
+	var imagePivot:Point;
 
 	public function new() 
 	{
@@ -31,8 +33,8 @@ class Main extends Sprite
 		
 		zoom = 1;
 		
-		//stage.displayState = StageDisplayState.FULL_SCREEN;
-		
+		bgPos = new Point();
+		imagePivot = new Point();
 		
 		// Assets:
 		var data = openfl.Assets.getBitmapData("img/background-full0000.png");
@@ -41,7 +43,8 @@ class Main extends Sprite
 		
 		setZoomBounds();
 		
-		bgPos = new Point();
+		imagePivot.setTo(stage.stageWidth / 2, stage.stageHeight / 2);
+		
 		
 		stage.addEventListener(MouseEvent.CLICK, onClick);
 		stage.addEventListener(MouseEvent.MOUSE_WHEEL, onWheel);
@@ -54,38 +57,36 @@ class Main extends Sprite
 	{
 		//zoom bounds
 		//to have fluid zoom
-		minZoom = stage.stageHeight / image.height;
+		minZoom = stage.stageHeight / (image.height / image.scaleY);
+		trace("image height", image.height / image.scaleY, "stage", stage.stageHeight);
 		deltaZoom = (1 - minZoom) / 2;
 		maxZoom = 1;
 		do {
 			maxZoom += deltaZoom;
 		}while (maxZoom < 1.2);
 		
-		trace(minZoom, zoom, maxZoom);
 	}
 	
 	function onResize(e:Event):Void
 	{
-		trace("resize");
 		setZoomBounds();
+		var values = [for (i in 0...5) i * deltaZoom + minZoom];
+		trace(values);
 		//find closest zoom to current
-		var closest = minZoom - deltaZoom;
-		var temp = closest;
-		var diff = 42.;
-		do {
-			temp += deltaZoom;
-			if (zoom - temp < diff)
-			{
-				diff = zoom - temp;
-				closest = temp;
-			}
-		}while (closest < maxZoom && diff != 0);
+		var closest = 42.;
+		for (item in values)
+		{
+			if ( Math.abs(item - zoom) < Math.abs(zoom - closest))
+				closest = item;
+		}
 		
 		if (closest != zoom)
 		{
+			trace("resize", minZoom, "old", zoom, "closest", closest, maxZoom);
 			zoom = closest;
-			//apply zoom TODO
+			applyZoom();
 		}
+		
 	}
 	
 	function onReset(e:MouseEvent):Void
@@ -124,17 +125,23 @@ class Main extends Sprite
 	}
 	function onWheel(e:MouseEvent):Void
 	{
-		var preZoom = zoom;
+		preZoom = zoom;
 		zoom += e.delta/100 * deltaZoom;
 		if (zoom > maxZoom)
 			zoom = maxZoom;
 		if (zoom < minZoom)
 			zoom = minZoom;
+		
+		imagePivot = image.globalToLocal(new Point(e.stageX, e.stageY));
 			
+		applyZoom();
+		
+	}
+	
+	function applyZoom():Void
+	{
 		if (preZoom == zoom)
 			return;
-
-		var imagePivot = image.globalToLocal(new Point(e.stageX, e.stageY));
 			
 		var offsetX = image.x + imagePivot.x * preZoom - imagePivot.x * zoom;
 		var offsetY = image.y + imagePivot.y * preZoom - imagePivot.y * zoom;
@@ -144,7 +151,6 @@ class Main extends Sprite
 		checkBounds(bgPos, stage.stageWidth, stage.stageHeight, image.width, image.height);
 		image.x = bgPos.x;
 		image.y = bgPos.y;
-		
 	}
 	
 	function checkBounds(pt:Point, screenX:Int, screenY:Int, imageWidth:Float, imageHeight:Float):Void{
