@@ -2,9 +2,10 @@
 WIP parallax. Openfl for now. Could be agnostic later.
 
 # TODO
-- [✅] simple bg scrolling and zoom
-- [ ] make it configurable
-- [ ] use json or xml config
-- [ ] add parallax layer
+✅ simple bg scrolling
+✅ make it configurable
+✅ use xml config
+✅ add parallax layer
+- [ ] zoom
 - [ ] sample
 - [ ] agnostic
