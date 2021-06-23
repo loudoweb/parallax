@@ -7,14 +7,11 @@ There is a sample with openfl that can help use this library in any engine.
 
 - parallax scrolling constrained by a defined world dimension
 - configurable by xml (or code)
-- zoom
+- zoom constrained by screen height
 - sample (openfl)
 - agnostic
 
 # Demo
 
 The sample can be tested here (better fullscreen): http://loudoweb.fr/app/parallax/
-	
-# known issue
-
-The app is constrained by the world dimension. But it lacks screen dimension constrain. So now the app works better fullscreen. (A fix is coming).
+And here is the [xml](https://github.com/loudoweb/parallax/blob/master/assets/data/parallax.xml)

@@ -26,8 +26,8 @@ class ParallaxCamera
 
 	/**
 	 * 
-	 * @param	x starting position of the camera
-	 * @param	y starting position of the camera
+	 * @param	x starting position of the camera (top left corner of camera)
+	 * @param	y starting position of the camera (top left corner of camera)
 	 * @param	width
 	 * @param	height
 	 * @param	zoom

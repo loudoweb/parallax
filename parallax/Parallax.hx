@@ -75,11 +75,10 @@ class Parallax
 		//trace("image height", height / camera.zoom, "stage", screenY);
 		camera.deltaZoom = (1 - camera.minZoom) / 2;
 		camera.maxZoom = 1 + camera.deltaZoom *2;
-		trace(camera.minZoom, camera.zoom, camera.maxZoom, camera.deltaZoom);
 		
-		
+		//to have zoom with 5 values
 		var values = [for (i in 0...5) i * camera.deltaZoom + camera.minZoom];
-		//find closest zoom to current
+		//find closest zoom to current (when screen dimension changes)
 		var closest = 42.;
 		for (item in values)
 		{
@@ -89,7 +88,6 @@ class Parallax
 		
 		if (closest != camera.zoom)
 		{
-			trace("resize", camera.minZoom, "old", camera.zoom, "closest", closest, camera.maxZoom);
 			camera.zoom = closest;
 			//this.zoomOffsetX = zoomOffsetX;
 			//this.zoomOffsetY = zoomOffsetY;
@@ -145,7 +143,7 @@ class Parallax
 		updateLayers();
 	}
 	
-	public static function parse(xml:Xml):Parallax
+	public static function parse(xml:Xml, screenWidth:Int = 1920, screenHeight:Int = 1080):Parallax
 	{
 		var _xml = new Access(xml.firstElement());
 		var world = new Parallax(_xml.has.id ? _xml.att.id : "world", _xml.has.world ? _xml.att.world : "", _xml.getFloat("camX"), _xml.getFloat("camY"));
@@ -153,6 +151,16 @@ class Parallax
 			world.width = Std.parseFloat(_xml.att.width);
 		if (_xml.has.height)
 			world.height = Std.parseFloat(_xml.att.height);
+			
+		world.camera.width = screenWidth;
+		world.camera.height = screenHeight;
+		
+		var useCenterPos = _xml.getBool("useCenterPos", false);
+		if (useCenterPos)
+		{
+			world.camera.x -= screenWidth/2;
+			world.camera.y -= screenHeight/2;
+		}
 					
 		if (world.layers == null)
 			world.layers = [];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<data id="test" camX="1000" camY="250" width="4000" height="1500">
+<data id="test" camX="1000" camY="250" width="4200" height="1500">
 	<layers>
 		<layer id="sky" depth="0">
 			<sprite img="_11_background" />
@@ -16,30 +16,37 @@
 		<layer id="big-clouds" depth="0.28">
 			<sprite img="_07_huge_clouds" />
 			<sprite img="_07_huge_clouds" x="2048" />
+			<sprite img="_07_huge_clouds" x="4096" />
 		</layer>
 		<layer id="hills" depth="0.45">
 			<sprite img="_06_hill2" />
 			<sprite img="_06_hill2" x="2048" />
+			<sprite img="_06_hill2" x="4096" />
 		</layer>
 		<layer id="hills2" depth="0.5">
 			<sprite img="_05_hill1" />
 			<sprite img="_05_hill1"  x="2048" />
+			<sprite img="_05_hill1"  x="4096" />
 		</layer>
 		<layer id="brushes" depth="0.7">
 			<sprite img="_04_bushes" />
 			<sprite img="_04_bushes" x="2048" />
+			<sprite img="_04_bushes" x="4096" />
 		</layer>
 		<layer id="distant-trees" depth="0.75">
 			<sprite img="_03_distant_trees" />
 			<sprite img="_03_distant_trees" x="2048" />
+			<sprite img="_03_distant_trees" x="4096" />
 		</layer>
 		<layer id="trees" depth="0.95">
 			<sprite img="_02_trees and bushes" />
 			<sprite img="_02_trees and bushes" x="2048" />
+			<sprite img="_02_trees and bushes" x="4096" />
 		</layer>
 		<layer id="ground" depth="1">
 			<sprite img="_01_ground" />
 			<sprite img="_01_ground" x="2048" />
+			<sprite img="_01_ground" x="4096" />
 		</layer>
 	</layers>
 </data>

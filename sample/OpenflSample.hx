@@ -33,7 +33,7 @@ class OpenflSample extends Sprite
 		
 		//parallax
 		var xml = Xml.parse(Assets.getText("parallax.xml"));
-		parallax = Parallax.parse(xml);
+		parallax = Parallax.parse(xml, stage.stageWidth, stage.stageHeight);
 		
 		containers = [];
 		
@@ -57,7 +57,6 @@ class OpenflSample extends Sprite
 				OpenflHelper.setWorldBounds(parallax, layer, spr);
 			}
 		}
-				
 		parallax.setZoomBounds(stage.stageHeight);		
 		
 		stage.addEventListener(MouseEvent.MOUSE_WHEEL, onWheel);
@@ -68,8 +67,8 @@ class OpenflSample extends Sprite
 	
 	function onResize(e:Event):Void
 	{
-		//parallax.camera.width = stage.stageWidth;
-		//parallax.camera.height = stage.stageHeight;
+		parallax.camera.width = stage.stageWidth;
+		parallax.camera.height = stage.stageHeight;
 		parallax.setZoomBounds(stage.stageHeight);
 	}
 	
