@@ -3,11 +3,6 @@ import haxe.ds.WeakMap;
 import haxe.xml.Access;
 using parallax.ParallaxHelper;
 
-#if openfl
-typedef Point = openfl.geom.Point;
-#else
-typedef Point = { x:Float, y:Float};
-#end
 /**
  * ...
  * @author Ludovic Bas - www.lugludum.com
