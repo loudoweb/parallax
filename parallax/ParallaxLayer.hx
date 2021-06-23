@@ -4,7 +4,7 @@ using parallax.ParallaxHelper;
 
 /**
  * ...
- * @author Ludovic Bas - www.loudoweb.fr
+ * @author Ludovic Bas - www.lugludum.com
  */
 class ParallaxLayer
 {

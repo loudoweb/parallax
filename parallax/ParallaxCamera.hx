@@ -24,6 +24,14 @@ class ParallaxCamera
 	public var maxZoom:Float;
 	public var deltaZoom:Float;
 
+	/**
+	 * 
+	 * @param	x starting position of the camera
+	 * @param	y starting position of the camera
+	 * @param	width
+	 * @param	height
+	 * @param	zoom
+	 */
 	public function new(x:Float, y:Float, width:Float = 1920, height:Float = 1080, zoom:Float = 1) 
 	{
 		this.originX = x;

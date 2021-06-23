@@ -1,4 +1,4 @@
-package;
+package sample;
 
 import haxe.xml.Access;
 import motion.Actuate;
@@ -12,12 +12,13 @@ import openfl.events.MouseEvent;
 import openfl.geom.Point;
 import parallax.Parallax;
 import parallax.ParallaxLayer;
+import parallax.engines.OpenflHelper;
 
 /**
  * ...
- * @author Ludovic Bas - www.loudoweb.fr
+ * @author Ludovic Bas - www.lugludum.com
  */
-class Main extends Sprite 
+class OpenflSample extends Sprite 
 {
 	var bgPos:Point;
 	var imagePivot:Point;
@@ -58,12 +59,7 @@ class Main extends Sprite
 				spr.x = sprite.originX;
 				spr.y = sprite.originY;
 				container.addChild(spr);
-				if (parallax.world != "" && layer.id == parallax.world)
-				{
-					parallax.width = container.width;
-					parallax.height = container.height;
-					parallax.world = "";//reset to avoid setting again with other image
-				}
+				OpenflHelper.setWorldBounds(parallax, layer, spr);
 			}
 		}
 				

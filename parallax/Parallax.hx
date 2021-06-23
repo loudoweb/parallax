@@ -19,14 +19,17 @@ class Parallax
 	public var id:String;
 	/**
 	 * Main layer that allows to retrieve the bounds (width and height) of the parallax world
+	 * optional
 	 */
 	public var world:String;
 	/**
 	 * Set manually the width of the parallax world or use variable `world`
+	 * optional
 	 */
 	public var width:Float;
 	/**
 	 * Set manually the height of the parallax world or use variable `world`
+	 * optional
 	 */
 	public var height:Float;
 	/**
@@ -37,7 +40,7 @@ class Parallax
 	public var camera:ParallaxCamera;
 	
 	public var speed:Int;
-
+	
 	public function new(id:String, world:String, cameraX:Float, cameraY:Float, speed:Int = 1 ) 
 	{
 		this.id = id;
@@ -146,7 +149,7 @@ class Parallax
 			world.width = Std.parseFloat(_xml.att.width);
 		if (_xml.has.height)
 			world.height = Std.parseFloat(_xml.att.height);
-		
+					
 		if (world.layers == null)
 			world.layers = [];
 		

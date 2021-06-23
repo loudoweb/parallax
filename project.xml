@@ -6,20 +6,23 @@
 	<meta title="parallax" package="parallax" version="0.0.1" company="loudoweb" />
 	
 	<!-- output -->
-	<app main="Main" file="parallax" path="bin" />
+	<app main="sample.OpenflSample" file="parallax" path="bin" />
 	
 	<window background="#000000" fps="30" />
 	<window width="0" height="0" unless="mobile" />
 	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
 	
 	<!-- classpath, haxe libs -->
-	<source path="src" />
+	<source path="sample" />
 	<haxelib name="openfl" />
 	<haxelib name="actuate" />
 	
 	<!-- assets -->
-	<assets path="assets/img" rename="img" />
-	<assets path="assets/data" rename="" />
+	<assets path="assets/img" rename="img" unless="gs" />
+	<assets path="assets/data" rename=""  unless="gs" />
+	
+	<assets path="assets_gs/img" rename="img" if="gs" />
+	<assets path="assets_gs/data" rename=""  if="gs" />
 	
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->
