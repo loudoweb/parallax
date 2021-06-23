@@ -20,8 +20,6 @@ import parallax.engines.OpenflHelper;
  */
 class OpenflSample extends Sprite 
 {
-	var bgPos:Point;
-	var imagePivot:Point;
 	
 	var parallax:Parallax;
 	var containers:Array<Sprite>;
@@ -36,9 +34,6 @@ class OpenflSample extends Sprite
 		//parallax
 		var xml = Xml.parse(Assets.getText("parallax.xml"));
 		parallax = Parallax.parse(xml);
-		
-		bgPos = new Point();
-		imagePivot = new Point();
 		
 		containers = [];
 		
@@ -63,15 +58,11 @@ class OpenflSample extends Sprite
 			}
 		}
 				
-		parallax.setZoomBounds(stage.stageHeight);
+		parallax.setZoomBounds(stage.stageHeight);		
 		
-		imagePivot.setTo(stage.stageWidth / 2, stage.stageHeight / 2);
-		
-		
-		//stage.addEventListener(MouseEvent.CLICK, onClick);
 		stage.addEventListener(MouseEvent.MOUSE_WHEEL, onWheel);
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, onDragStart);
-		//stage.addEventListener(MouseEvent.RIGHT_CLICK, onReset);
+		stage.addEventListener(MouseEvent.MIDDLE_CLICK, onReset);
 		stage.addEventListener(Event.RESIZE, onResize);
 	}
 	
@@ -84,11 +75,15 @@ class OpenflSample extends Sprite
 	
 	function onReset(e:MouseEvent):Void
 	{
-		//parallax.zoom = 1;
-		/*for (container in containers)
+		e.preventDefault();
+		parallax.camera.zoom = 1;
+		parallax.checkBounds();
+		for (i in 0...containers.length)
 		{
-			Actuate.tween(container, 0.25, {scaleX: zoom, scaleY: zoom});
-		}*/
+			var container = containers[i];
+			if(parallax.layers[i].depth != 0)
+				container.scaleX = container.scaleY = parallax.layers[i].scale * parallax.camera.zoom;
+		}
 	}
 	
 	function onDragStart(e:MouseEvent):Void
@@ -124,7 +119,18 @@ class OpenflSample extends Sprite
 
 	function onWheel(e:MouseEvent):Void
 	{
-		parallax.onZoom(e.delta / 100);
+		parallax.onZoom(e.delta / 100, e.stageX + parallax.camera.x, e.stageY + parallax.camera.y);
+		
+		for (i in 0...containers.length)
+		{
+			var container = containers[i];
+			if (parallax.layers[i].depth != 0)
+			{
+				container.scaleX = container.scaleY = parallax.layers[i].scale * parallax.camera.zoom;
+				container.x = parallax.layers[i].x;
+				container.y = parallax.layers[i].y;
+			}
+		}
 		
 	}
 

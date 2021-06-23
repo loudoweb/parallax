@@ -1,4 +1,5 @@
 package parallax;
+import haxe.ds.WeakMap;
 import haxe.xml.Access;
 using parallax.ParallaxHelper;
 
@@ -40,6 +41,9 @@ class Parallax
 	public var camera:ParallaxCamera;
 	
 	public var speed:Int;
+	
+	public var zoomOffsetX:Null<Float>;
+	public var zoomOffsetY:Null<Float>;
 	
 	public function new(id:String, world:String, cameraX:Float, cameraY:Float, speed:Int = 1 ) 
 	{
@@ -92,53 +96,58 @@ class Parallax
 		{
 			trace("resize", camera.minZoom, "old", camera.zoom, "closest", closest, camera.maxZoom);
 			camera.zoom = closest;
-			//applyZoom();
+			//this.zoomOffsetX = zoomOffsetX;
+			//this.zoomOffsetY = zoomOffsetY;
+					
+			applyZoom();
 		}
 	
 	}
 	
 	public function checkBounds():Void{
+
 		if (camera.x < 0){
 			camera.x = 0;
-		}else if (camera.x > width - camera.width){
-			camera.x = width - camera.width;
+		}else if (camera.x > (width * camera.zoom - camera.width)){
+			camera.x = (width * camera.zoom - camera.width) ;
 		}
 			
 		if (camera.y < 0){
 			camera.y = 0;
-		}else if (camera.y > height - camera.height){
-			camera.y = height - camera.height;
+		}else if (camera.y > (height * camera.zoom - camera.height)){
+			camera.y = (height * camera.zoom - camera.height);
 		
 		}
 	}
 	
-	public function onZoom(delta:Float):Void {
+	public function onZoom(delta:Float, zoomOffsetX:Null<Float> = null, zoomOffsetY:Null<Float> = null):Void {
 		
 		camera.onZoom(delta);
 		
-		//imagePivot = image.globalToLocal(new Point(e.stageX, e.stageY));
-			
+		this.zoomOffsetX = zoomOffsetX;
+		this.zoomOffsetY = zoomOffsetY;
+					
 		applyZoom();
 		
 	}
 	
-	function applyZoom():Void
+	public function applyZoom():Void
 	{
 		if (!camera.canApplyZoom())
 			return;
 			
-		//var offsetX = image.x + imagePivot.x * preZoom - imagePivot.x * zoom;
-		//var offsetY = image.y + imagePivot.y * preZoom - imagePivot.y * zoom;
-
-		//bgPos.setTo(offsetX, offsetY);
-		/*for (container in containers)
+		if (zoomOffsetX != null)
 		{
+
+			var offsetX = zoomOffsetX * camera.preZoom - zoomOffsetX * camera.zoom;
+			var offsetY = zoomOffsetY * camera.preZoom - zoomOffsetY * camera.zoom;
 			
-			container.scaleX = container.scaleY = parallax.zoom;
-		}*/
-		//checkBounds(bgPos, stage.stageWidth, stage.stageHeight);
-		//image.x = bgPos.x;
-		//image.y = bgPos.y;
+			camera.x -= offsetX;
+			camera.y -= offsetY;
+		}
+
+		checkBounds();
+		updateLayers();
 	}
 	
 	public static function parse(xml:Xml):Parallax

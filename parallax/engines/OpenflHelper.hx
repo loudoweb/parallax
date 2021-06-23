@@ -10,6 +10,12 @@ import parallax.ParallaxLayer;
  */
 class OpenflHelper
 {
+	/**
+	 * Helper to get width and height of main image to auto set the bounds of the parallax world.
+	 * @param	parallax
+	 * @param	layer
+	 * @param	container
+	 */
 	inline public static function setWorldBounds(parallax:Parallax, layer:ParallaxLayer, container:DisplayObject ):Void
 	{
 		if (parallax.world != "" && layer.id == parallax.world)
