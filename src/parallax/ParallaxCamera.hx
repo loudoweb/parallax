@@ -18,11 +18,11 @@ class ParallaxCamera
 	
 	//zoom
 	//zoom
-	var minZoom:Float;
-	var preZoom:Float;
+	public var minZoom:Float;
+	public var preZoom:Float;
 	public var zoom:Float;
-	var maxZoom:Float;
-	var deltaZoom:Float;
+	public var maxZoom:Float;
+	public var deltaZoom:Float;
 
 	public function new(x:Float, y:Float, width:Float = 1920, height:Float = 1080, zoom:Float = 1) 
 	{
@@ -33,17 +33,6 @@ class ParallaxCamera
 		this.zoom = zoom;
 		this.x = x;
 		this.y = y;
-	}
-	
-	public function setZoomBounds(screenY:Float):Void
-	{
-		//zoom bounds
-		//to have fluid zoom
-		minZoom = screenY / (height / zoom);
-		//trace("image height", height / zoom, "stage", screenY);
-		deltaZoom = (1 - minZoom) / 2;
-		maxZoom = 1 + deltaZoom *2;
-		//trace(minZoom, zoom, maxZoom, deltaZoom);
 	}
 	
 	public function onZoom(delta:Float):Void

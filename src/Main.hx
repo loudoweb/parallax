@@ -66,19 +66,17 @@ class Main extends Sprite
 				}
 			}
 		}
-		
-		trace(parallax);
-		
+				
 		parallax.setZoomBounds(stage.stageHeight);
 		
 		imagePivot.setTo(stage.stageWidth / 2, stage.stageHeight / 2);
 		
 		
 		//stage.addEventListener(MouseEvent.CLICK, onClick);
-		//stage.addEventListener(MouseEvent.MOUSE_WHEEL, onWheel);
+		stage.addEventListener(MouseEvent.MOUSE_WHEEL, onWheel);
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, onDragStart);
 		//stage.addEventListener(MouseEvent.RIGHT_CLICK, onReset);
-		//stage.addEventListener(Event.RESIZE, onResize);
+		stage.addEventListener(Event.RESIZE, onResize);
 	}
 	
 	function onResize(e:Event):Void
@@ -86,23 +84,6 @@ class Main extends Sprite
 		//parallax.camera.width = stage.stageWidth;
 		//parallax.camera.height = stage.stageHeight;
 		parallax.setZoomBounds(stage.stageHeight);
-		/*var values = [for (i in 0...5) i * deltaZoom + minZoom];
-		trace(values);
-		//find closest zoom to current
-		var closest = 42.;
-		for (item in values)
-		{
-			if ( Math.abs(item - zoom) < Math.abs(zoom - closest))
-				closest = item;
-		}
-		
-		if (closest != zoom)
-		{
-			trace("resize", minZoom, "old", zoom, "closest", closest, maxZoom);
-			zoom = closest;
-			applyZoom();
-		}*/
-		
 	}
 	
 	function onReset(e:MouseEvent):Void
@@ -142,17 +123,9 @@ class Main extends Sprite
 			containers[i].x = parallax.layers[i].x;
 			containers[i].y = parallax.layers[i].y;
 		}
-		//bgPos.setTo(image.x, image.y);
-		//checkBounds(bgPos, stage.stageWidth, stage.stageHeight, image.width, image.height);
-		//image.x = bgPos.x;
-		//image.y = bgPos.y;
-			
+	
 	}
-	function onClick(e:MouseEvent):Void
-	{
-		stage.displayState = StageDisplayState.FULL_SCREEN;
-		
-	}
+
 	function onWheel(e:MouseEvent):Void
 	{
 		parallax.onZoom(e.delta / 100);

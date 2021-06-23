@@ -49,9 +49,9 @@ class Parallax
 	
 	public function moveCamera(x:Float, y:Float):Void
 	{
-		camera.x += x;
-		camera.y += y;
-		//checkBounds();
+		camera.x += x * speed;
+		camera.y += y * speed;
+		checkBounds();
 		updateLayers();
 	}
 	
@@ -59,32 +59,51 @@ class Parallax
 	{
 		for (layer in layers)
 		{
-			layer.x = layer.originX - camera.x + (camera.originX - camera.x) * speed * layer.depth;
-			layer.y = layer.originY - camera.y + (camera.originY - camera.y) * speed * layer.depth;
+			layer.x = Math.round(layer.originX - camera.x + (camera.originX - camera.x) * (layer.depth - 1));
+			layer.y = Math.round(layer.originY - camera.y + (camera.originY - camera.y) * (layer.depth - 1));
 		}	
 	}
 	
 	
-	
-	inline public function setZoomBounds(screenY:Int):Void
+	public function setZoomBounds(screenY:Int):Void
 	{
-		camera.setZoomBounds(screenY);
+		//zoom bounds
+		//to have fluid zoom
+		camera.minZoom = screenY / (height / camera.zoom);
+		//trace("image height", height / camera.zoom, "stage", screenY);
+		camera.deltaZoom = (1 - camera.minZoom) / 2;
+		camera.maxZoom = 1 + camera.deltaZoom *2;
+		trace(camera.minZoom, camera.zoom, camera.maxZoom, camera.deltaZoom);
+		
+		
+		var values = [for (i in 0...5) i * camera.deltaZoom + camera.minZoom];
+		//find closest zoom to current
+		var closest = 42.;
+		for (item in values)
+		{
+			if ( Math.abs(item - camera.zoom) < Math.abs(camera.zoom - closest))
+				closest = item;
+		}
+		
+		if (closest != camera.zoom)
+		{
+			trace("resize", camera.minZoom, "old", camera.zoom, "closest", closest, camera.maxZoom);
+			camera.zoom = closest;
+			//applyZoom();
+		}
+	
 	}
 	
 	public function checkBounds():Void{
 		if (camera.x < 0){
-			trace('bound reach x <0');
 			camera.x = 0;
 		}else if (camera.x > width - camera.width){
-			trace('bound reach camera.width - width', camera.width, width);
 			camera.x = width - camera.width;
 		}
 			
 		if (camera.y < 0){
 			camera.y = 0;
-			trace('bound reach y <0');
 		}else if (camera.y > height - camera.height){
-			trace('bound reach camera.height - height');
 			camera.y = height - camera.height;
 		
 		}
