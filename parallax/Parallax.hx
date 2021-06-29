@@ -40,11 +40,18 @@ class Parallax
 	public var zoomOffsetX:Null<Float>;
 	public var zoomOffsetY:Null<Float>;
 	
-	public function new(id:String, world:String, cameraX:Float, cameraY:Float, speed:Int = 1 ) 
+	/**
+	 * additional computation if wanted: push apart foregrounds from center of world when zooming (left foreground push on left, right foreground push on right)
+	 */
+	public var pushApartOnZoom:Int;
+	
+	public function new(id:String, world:String, cameraX:Float, cameraY:Float, speed:Int = 1, pushApartOnZoom:Int = 0 ) 
 	{
 		this.id = id;
 		this.world = world;
 		this.speed = speed;
+		
+		this.pushApartOnZoom = pushApartOnZoom;
 		
 		camera = new ParallaxCamera(cameraX, cameraY );
 	}
@@ -59,20 +66,34 @@ class Parallax
 	
 	public function updateLayers():Void
 	{
+		
 		for (layer in layers)
 		{
 			layer.x = Math.round(layer.originX - camera.x + (camera.originX - camera.x) * (layer.depth - 1));
 			layer.y = Math.round(layer.originY - camera.y + (camera.originY - camera.y) * (layer.depth - 1));
-		}	
-	}
-	
+		}
+		
+		if (pushApartOnZoom > 0)
+		{
+			for (layer in layers)
+			{
+				if (layer.depth > 1)
+				{
+					for (sprite in layer.sprites)
+					{
+						sprite.x = sprite.originX + Math.round((sprite.originX + sprite.width * 0.5 - width * 0.5).sign() * (layer.depth * speed * Math.max(camera.zoom - 1, 0)) * pushApartOnZoom);
+						sprite.y = sprite.originY + Math.round((sprite.originY + sprite.height * 0.5 - height * 0.5).sign() * (layer.depth * speed * Math.max(camera.zoom - 1, 0)) * pushApartOnZoom);
+					}
+				}
+			}
+		}
+	}	
 	
 	public function setZoomBounds(screenY:Int):Void
 	{
 		//zoom bounds
 		//to have fluid zoom
 		camera.minZoom = screenY / (height / camera.zoom);
-		//trace("image height", height / camera.zoom, "stage", screenY);
 		camera.deltaZoom = (1 - camera.minZoom) / 2;
 		camera.maxZoom = 1 + camera.deltaZoom *2;
 		
@@ -146,7 +167,7 @@ class Parallax
 	public static function parse(xml:Xml, screenWidth:Int = 1920, screenHeight:Int = 1080):Parallax
 	{
 		var _xml = new Access(xml.firstElement());
-		var world = new Parallax(_xml.has.id ? _xml.att.id : "world", _xml.has.world ? _xml.att.world : "", _xml.getFloat("camX"), _xml.getFloat("camY"));
+		var world = new Parallax(_xml.has.id ? _xml.att.id : "world", _xml.has.world ? _xml.att.world : "", _xml.getFloat("camX"), _xml.getFloat("camY"), 1,  _xml.getInt("pushApartOnZoom"));
 		if (_xml.has.width)
 			world.width = Std.parseFloat(_xml.att.width);
 		if (_xml.has.height)

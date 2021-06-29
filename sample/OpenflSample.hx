@@ -51,6 +51,9 @@ class OpenflSample extends Sprite
 			{
 				var spr = new Bitmap(Assets.getBitmapData("img/" + sprite.img), null, true);
 				spr.name = sprite.id;
+				//width and height can be set by xml, but doing it in code make the xml easier to fulfill
+				sprite.width = Std.int(spr.width);
+				sprite.height = Std.int(spr.height);
 				spr.x = sprite.originX;
 				spr.y = sprite.originY;
 				container.addChild(spr);
@@ -112,6 +115,12 @@ class OpenflSample extends Sprite
 		{
 			containers[i].x = parallax.layers[i].x;
 			containers[i].y = parallax.layers[i].y;
+			
+			for (j in 0...containers[i].numChildren)
+			{
+				containers[i].getChildAt(j).x = parallax.layers[i].sprites[j].x;
+				containers[i].getChildAt(j).y = parallax.layers[i].sprites[j].y;
+			}
 		}
 	
 	}

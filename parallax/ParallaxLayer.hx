@@ -20,13 +20,13 @@ class ParallaxLayer
 	public var originX:Float;
 	public var originY:Float;
 	
-	public var x:Float;
-	public var y:Float;
+	public var x:Int;
+	public var y:Int;
 	public var scale:Float;
 	
 	public var sprites:Array<ParallaxSprite>;
 	
-	public function new(id:String, depth:Float, x:Float, y:Float) 
+	public function new(id:String, depth:Float, x:Int, y:Int) 
 	{
 		this.id = id;
 		this.depth = depth;
@@ -44,7 +44,7 @@ class ParallaxLayer
 	
 	public static function parse(xml:Access):ParallaxLayer
 	{
-		var layer = new ParallaxLayer(xml.att.id, xml.getFloat("depth", 1), xml.getFloat("x"), xml.getFloat("y"));
+		var layer = new ParallaxLayer(xml.att.id, xml.getFloat("depth", 1), xml.getInt("x"), xml.getInt("y"));
 		
 		if (layer.sprites == null)
 			layer.sprites = [];
