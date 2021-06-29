@@ -116,10 +116,13 @@ class OpenflSample extends Sprite
 			containers[i].x = parallax.layers[i].x;
 			containers[i].y = parallax.layers[i].y;
 			
-			for (j in 0...containers[i].numChildren)
+			if (parallax.pushApartOnZoom > 0)
 			{
-				containers[i].getChildAt(j).x = parallax.layers[i].sprites[j].x;
-				containers[i].getChildAt(j).y = parallax.layers[i].sprites[j].y;
+				for (j in 0...containers[i].numChildren)
+				{
+					containers[i].getChildAt(j).x = parallax.layers[i].sprites[j].x;
+					containers[i].getChildAt(j).y = parallax.layers[i].sprites[j].y;
+				}
 			}
 		}
 	
