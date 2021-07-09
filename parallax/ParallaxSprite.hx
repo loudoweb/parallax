@@ -64,7 +64,7 @@ class ParallaxSprite
 	
 	public static function parse(xml:Access):ParallaxSprite
 	{
-		return new ParallaxSprite(xml.has.id ? xml.att.id : xml.att.img, xml.att.img + ".png", xml.getInt("x"), xml.getInt("y"), xml.getFloat("scaleX", 1), xml.getFloat("scaleY", 1), xml.getInt("width"), xml.getInt("height"), xml.getInt("offsetX"), xml.getInt("offsetY"), xml.getBool("isAnim", false));
+		return new ParallaxSprite(xml.has.id ? xml.att.id : xml.att.img, xml.has.img ? xml.att.img + ".png" : "", xml.getInt("x"), xml.getInt("y"), xml.getFloat("scaleX", 1), xml.getFloat("scaleY", 1), xml.getInt("width"), xml.getInt("height"), xml.getInt("offsetX"), xml.getInt("offsetY"), xml.getBool("isAnim", false));
 	}
 	
 }
