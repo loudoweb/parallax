@@ -18,11 +18,9 @@
 	<haxelib name="actuate" />
 	
 	<!-- assets -->
-	<assets path="assets/img" rename="img" unless="gs" />
-	<assets path="assets/data" rename=""  unless="gs" />
+	<assets path="assets/img" rename="img" />
+	<assets path="assets/data" rename="" />
 	
-	<assets path="assets_gs/img" rename="img" if="gs" />
-	<assets path="assets_gs/data" rename=""  if="gs" />
 	
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->

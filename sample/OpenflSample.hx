@@ -4,6 +4,7 @@ import haxe.xml.Access;
 import motion.Actuate;
 import openfl.Assets;
 import openfl.display.Bitmap;
+import openfl.display.DisplayObject;
 import openfl.display.Sprite;
 import openfl.Lib;
 import openfl.display.StageDisplayState;
@@ -49,18 +50,27 @@ class OpenflSample extends Sprite
 			containers.push(container);
 			for (sprite in layer.sprites)
 			{
-				var spr = new Bitmap(Assets.getBitmapData("img/" + sprite.img), null, true);
-				spr.name = sprite.id;
-				//width and height can be set by xml, but doing it in code make the xml easier to fulfill
-				sprite.width = Std.int(spr.width);
-				sprite.height = Std.int(spr.height);
+				var spr:DisplayObject = null;
+				if (sprite.img != "")
+				{
+					spr = new Bitmap(Assets.getBitmapData("img/" + sprite.img), null, true);
+					spr.name = sprite.id;
+					//width and height can be set by xml, but doing it in code make the xml easier to fulfill
+					sprite.width = Std.int(spr.width);
+					sprite.height = Std.int(spr.height);
+				}else{
+					spr = new Sprite();
+					spr.name = sprite.id;
+				}
+				
 				spr.x = sprite.originX;
 				spr.y = sprite.originY;
 				container.addChild(spr);
 				OpenflHelper.setWorldBounds(parallax, layer, spr);
 			}
 		}
-		parallax.setZoomBounds(stage.stageHeight);		
+
+		parallax.setZoomBounds(stage.stageHeight);
 		
 		stage.addEventListener(MouseEvent.MOUSE_WHEEL, onWheel);
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, onDragStart);
@@ -72,6 +82,7 @@ class OpenflSample extends Sprite
 	{
 		parallax.camera.width = stage.stageWidth;
 		parallax.camera.height = stage.stageHeight;
+
 		parallax.setZoomBounds(stage.stageHeight);
 	}
 	
