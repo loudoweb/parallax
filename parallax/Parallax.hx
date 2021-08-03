@@ -138,8 +138,8 @@ class Parallax
 		
 		camera.onZoom(delta);
 		
-		this.zoomOffsetX = zoomOffsetX;
-		this.zoomOffsetY = zoomOffsetY;
+		this.zoomOffsetX = (zoomOffsetX + camera.x) / camera.preZoom;
+		this.zoomOffsetY = (zoomOffsetY + camera.y) / camera.preZoom;
 					
 		applyZoom();
 		
@@ -155,7 +155,7 @@ class Parallax
 
 			var offsetX = zoomOffsetX * camera.preZoom - zoomOffsetX * camera.zoom;
 			var offsetY = zoomOffsetY * camera.preZoom - zoomOffsetY * camera.zoom;
-			
+
 			camera.x -= offsetX;
 			camera.y -= offsetY;
 		}

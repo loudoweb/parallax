@@ -69,8 +69,11 @@ class OpenflSample extends Sprite
 				OpenflHelper.setWorldBounds(parallax, layer, spr);
 			}
 		}
-
+		#if (gs || gs2)
+		parallax.setZoomBounds(1080);
+		#else
 		parallax.setZoomBounds(stage.stageHeight);
+		#end	
 		
 		stage.addEventListener(MouseEvent.MOUSE_WHEEL, onWheel);
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, onDragStart);
@@ -82,8 +85,11 @@ class OpenflSample extends Sprite
 	{
 		parallax.camera.width = stage.stageWidth;
 		parallax.camera.height = stage.stageHeight;
-
+		#if (gs || gs2)
+		parallax.setZoomBounds(1080);
+		#else
 		parallax.setZoomBounds(stage.stageHeight);
+		#end
 	}
 	
 	function onReset(e:MouseEvent):Void
@@ -141,7 +147,7 @@ class OpenflSample extends Sprite
 
 	function onWheel(e:MouseEvent):Void
 	{
-		parallax.onZoom(e.delta / 100, e.stageX + parallax.camera.x, e.stageY + parallax.camera.y);
+		parallax.onZoom(e.delta / 100, e.stageX, e.stageY);
 		
 		for (i in 0...containers.length)
 		{
