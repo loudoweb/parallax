@@ -1,6 +1,6 @@
 package parallax;
 import haxe.xml.Access;
-using parallax.ParallaxHelper;
+using kadabra.utils.XMLUtils;
 
 /**
  * ...

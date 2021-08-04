@@ -15,3 +15,7 @@ There is a sample with openfl that can help use this library in any engine.
 
 The sample can be tested here (better fullscreen): http://loudoweb.fr/app/parallax/
 And here is the [xml](https://github.com/loudoweb/parallax/blob/master/assets/data/parallax.xml)
+	
+# dependency
+
+https://github.com/loudoweb/kadabra-utils

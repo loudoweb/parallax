@@ -2,6 +2,7 @@ package parallax;
 import haxe.ds.WeakMap;
 import haxe.xml.Access;
 using parallax.ParallaxHelper;
+using kadabra.utils.XMLUtils;
 
 /**
  * ...
