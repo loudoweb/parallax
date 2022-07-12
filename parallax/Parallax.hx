@@ -65,6 +65,13 @@ class Parallax
 		updateLayers();
 	}
 	
+	public function centerCamera():Void
+	{
+		camera.x = (width * camera.zoom - camera.width) / 2;
+		camera.y = (height * camera.zoom - camera.height) / 2;
+		updateLayers();
+	}
+	
 	public function updateLayers():Void
 	{
 		
