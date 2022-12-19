@@ -4,6 +4,7 @@ package parallax;
  * ...
  * @author Ludovic Bas - www.lugludum.com
  */
+@:keepSub
 class ParallaxCamera 
 {
 	//boundaries
