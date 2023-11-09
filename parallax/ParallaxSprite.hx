@@ -66,7 +66,8 @@ class ParallaxSprite {
 		var img:String = "";
 		if (xml.has.img && xml.att.img != "") {
 			img = xml.att.img;
-			if (img.lastIndexOf('.') != img.length - 4)
+			var lastDotIndex = img.lastIndexOf('.');
+			if (lastDotIndex == -1 || lastDotIndex != img.length - 4)
 				img += ".png";
 		}
 		return new ParallaxSprite(xml.has.id ? xml.att.id : xml.att.img, img, xml.getInt("x"), xml.getInt("y"), xml.getFloat("scaleX", 1),
